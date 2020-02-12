@@ -17,16 +17,16 @@ public class Logic {
     private final Figure[] figures;
     private int index = 0;
 
-    public Logic(int size) {
+    public Logic (int size) {
         this.size = size;
         this.figures = new Figure[size * size];
     }
 
-    public void add(Figure figure) {
+    public void add (Figure figure) {
         this.figures[this.index++] = figure;
     }
 
-    public boolean move(Cell source, Cell dest) {
+    public boolean move (Cell source, Cell dest) {
         boolean rst = false;
         int index = this.findBy(source);
         if (index != -1) {
@@ -39,25 +39,23 @@ public class Logic {
         return rst;
     }
 
-    public boolean isFree(Cell ... cells) {
+    public boolean isFree (Cell... cells) {
         boolean result = cells.length > 0;
         for (Cell cell : cells) {
             if (this.findBy(cell) != -1) {
-               result = false;
-               break;
+                result = false;
+                break;
             }
         }
         return result;
     }
 
-    public void clean() {
-        for (int position = 0; position != this.figures.length; position++) {
-            this.figures[position] = null;
-        }
+    public void clean () {
+        Arrays.fill(this.figures, null);
         this.index = 0;
     }
 
-    private int findBy(Cell cell) {
+    private int findBy (Cell cell) {
         int rst = -1;
         for (int index = 0; index != this.figures.length; index++) {
             if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
@@ -68,13 +66,34 @@ public class Logic {
         return rst;
     }
 
-    public boolean isWin() {
+    public boolean isWin () {
         int[][] table = this.convert();
         boolean result = false;
+        int count = 0;
+        for (int row = 0; row != table.length; row++) {
+            for (int cell = 0; cell != table.length; cell++) {
+                if (table[row][cell] == 1) {
+                    count += 1;
+                }
+                if (count == table.length - 1) {
+                    result = true;
+                }
+            }
+        }
+        for (int cell = 0; cell != table.length; cell++) {
+            for (int row = 0; row != table.length; row++) {
+                if (table[cell][row] == 1) {
+                    count += 1;
+                }
+                if (count == table.length - 1) {
+                    result = true;
+                }
+            }
+        }
         return result;
     }
 
-    public int[][] convert() {
+    public int[][] convert () {
         int[][] table = new int[this.size][this.size];
         for (int row = 0; row != table.length; row++) {
             for (int cell = 0; cell != table.length; cell++) {
@@ -88,7 +107,7 @@ public class Logic {
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return Arrays.toString(this.convert());
     }
 }
