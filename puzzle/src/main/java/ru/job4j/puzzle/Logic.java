@@ -75,10 +75,12 @@ public class Logic {
                 if (table[row][cell] == 1 || table[cell][row] == 1) {
                     count += 1;
                 }
-                if (count == table.length - 1) {
+                if (count == table.length ) {
                     result = true;
+                    break;
                 }
             }
+            count = 0;
         }
         return result;
     }
