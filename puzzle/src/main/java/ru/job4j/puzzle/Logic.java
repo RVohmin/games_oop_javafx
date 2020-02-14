@@ -80,10 +80,12 @@ public class Logic {
                     countRow += 1;
                 }
             }
-            if (countCell == table.length -1 || countRow == table.length - 1) {
+            if (countCell == table.length || countRow == table.length) {
                 result = true;
                 break;
             }
+            countCell = 0;
+            countRow = 0;
         }
         return result;
     }
