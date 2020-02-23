@@ -23,15 +23,12 @@ public class BishopBlack implements Figure {
     @Override
     public Cell[] way(Cell source, Cell dest) throws IllegalStateException {
         if (!isDiagonal(source, dest)) {
-            try {
             throw new IllegalStateException(
                     String.format("Could not way by diagonal from %s to %s", source, dest)
             );
-            } catch (IllegalStateException e) {}
         }
         int size = Math.abs(dest.x - source.x);
         Cell[] steps = new Cell[size];
-        Integer.compare(dest.x, source.x);
         int deltaX = Integer.compare(dest.x, source.x);
         int deltaY = Integer.compare(dest.y, source.y);
         for (int index = 0; index < size; index++) {
