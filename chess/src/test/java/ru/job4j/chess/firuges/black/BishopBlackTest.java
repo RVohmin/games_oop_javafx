@@ -56,7 +56,6 @@ public class BishopBlackTest {
     public void methodDiagonalIfToUpRightThenTrue() {
         BishopBlack bishopBlack = new BishopBlack(Cell.H1);
         boolean result = bishopBlack.isDiagonal(Cell.H1, Cell.A8);
-//        boolean expected = true;
         assertThat(result, is(true));
     }
     @Test

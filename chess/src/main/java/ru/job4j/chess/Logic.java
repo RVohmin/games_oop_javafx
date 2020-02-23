@@ -23,24 +23,24 @@ public class Logic {
 
     public boolean move(Cell source, Cell dest) {
         boolean rst = false;
-        int index = this.findBy(source); // определяем есть ли в клетке cell фигура
-        if (index != -1) { // если есть фигура из figures то весь код ниже
-            Cell[] steps = this.figures[index].way(source, dest); // для фигуры на клетке cell . получить массив клеток пути
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) { //если массив не пустой и последний элемент равен точке назначения
-                for (int i = 0; i < steps.length; i++) {
-                    try {
+        try {
+            int index = this.findBy(source); // определяем есть ли в клетке cell фигура
+            if (index != -1) { // если есть фигура из figures то весь код ниже
+                Cell[] steps = this.figures[index].way(source, dest); // для фигуры на клетке cell . получить массив клеток пути
+                if (steps.length > 0 && steps[steps.length - 1].equals(dest)) { //если массив не пустой и последний элемент равен точке назначения
+                    for (int i = 0; i < steps.length; i++) {
                         if (this.findBy(steps[i]) != -1) { // если на любой клетке по пути есть фигура
                             rst = false;
                             throw new Exception();
                         }
-                    } catch (Exception e) {
-                        System.out.println("Ошибка! На пути фигуры есть другая фигура! " + e.toString());
-                        return rst;
+                        rst = true;
                     }
-                    rst = true;
+                    this.figures[index] = this.figures[index].copy(dest);
                 }
-                this.figures[index] = this.figures[index].copy(dest);
             }
+        } catch (Exception e) {
+            System.out.println("Ошибка! На пути фигуры есть другая фигура! " + e.toString());
+            return rst;
         }
         return rst;
     }
