@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 public class Logic3TTest {
 
     @Test
-    public void whenHasXWinner() {
+    public void whenHasXLeftDiagonalWinner() {
         Figure3T[][] table = {
                 {new Figure3T(true, false), new Figure3T(), new Figure3T()},
                 {new Figure3T(), new Figure3T(true, false), new Figure3T()},
@@ -18,7 +18,6 @@ public class Logic3TTest {
         Logic3T login = new Logic3T(table);
         assertThat(login.isWinnerX(), is(true));
     }
-
 
     @Test
     public void whenNotFill() {
@@ -66,24 +65,46 @@ public class Logic3TTest {
     }
 
     @Test
-    public void whenHasOWinner() {
+    public void whenHasOVerticalWinner() {
         Figure3T[][] table = {
-                {new Figure3T(true, false), new Figure3T(), new Figure3T()},
-                {new Figure3T(true, false), new Figure3T(true, false), new Figure3T()},
-                {new Figure3T(true, false), new Figure3T(), new Figure3T(true, false)},
+                {new Figure3T(false, true), new Figure3T(), new Figure3T()},
+                {new Figure3T(false, true), new Figure3T(), new Figure3T()},
+                {new Figure3T(false, true), new Figure3T(), new Figure3T()},
         };
         Logic3T login = new Logic3T(table);
         assertThat(login.isWinnerO(), is(true));
     }
 
     @Test
-    public void whenHasGas() {
+    public void whenHasOHorizontalWinner() {
         Figure3T[][] table = {
-                {new Figure3T(true, false), new Figure3T(), new Figure3T()},
-                {new Figure3T(), new Figure3T(true, false), new Figure3T()},
-                {new Figure3T(), new Figure3T(), new Figure3T(true, false)},
+                {new Figure3T(false, true), new Figure3T(false, true), new Figure3T(false, true)},
+                {new Figure3T(), new Figure3T(), new Figure3T()},
+                {new Figure3T(), new Figure3T(), new Figure3T()},
+        };
+        Logic3T login = new Logic3T(table);
+        assertThat(login.isWinnerO(), is(true));
+    }
+
+    @Test
+    public void whenHasGap() {
+        Figure3T[][] table = {
+                {new Figure3T(true, false), new Figure3T(true, false), new Figure3T(false, true)},
+                {new Figure3T(false, true), new Figure3T(true, false), new Figure3T(true, false)},
+                {new Figure3T(true, false), new Figure3T(false, true), new Figure3T()},
         };
         Logic3T login = new Logic3T(table);
         assertThat(login.hasGap(), is(true));
+    }
+
+    @Test
+    public void whenHasNotGap() {
+        Figure3T[][] table = {
+                {new Figure3T(true, false), new Figure3T(true, false), new Figure3T(false, true)},
+                {new Figure3T(false, true), new Figure3T(true, false), new Figure3T(true, false)},
+                {new Figure3T(true, false), new Figure3T(false, true), new Figure3T(false, true)},
+        };
+        Logic3T login = new Logic3T(table);
+        assertThat(login.hasGap(), is(false));
     }
 }
