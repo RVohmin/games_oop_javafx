@@ -27,40 +27,31 @@ public class Logic3T {
         return result;
     }
 
-    public boolean isWinnerX() {
-        if (this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 1) ||
-                this.fillBy(Figure3T::hasMarkX, this.table.length - 1, 0, -1, 1)) {
+    public boolean isWin(Predicate<Figure3T> condition) {
+        if (this.fillBy(condition, 0, 0, 1, 1) ||
+                this.fillBy(condition, this.table.length - 1, 0, -1, 1)) {
             return true;
         }
         for (int i = 0; i < this.table.length; i++) {
-            if (this.fillBy(Figure3T::hasMarkX, 0, i, 1, 0) ||
-                    this.fillBy(Figure3T::hasMarkX, i, 0, 0, 1)
+            if (this.fillBy(condition, 0, i, 1, 0) ||
+                    this.fillBy(condition, i, 0, 0, 1)
             ) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isWinnerX() {
+        return isWin(Figure3T::hasMarkX);
     }
 
     public boolean isWinnerO() {
-        if (this.fillBy(Figure3T::hasMarkO, 0, 0, 1, 1) ||
-                this.fillBy(Figure3T::hasMarkO, this.table.length - 1, 0, -1, 1)) {
-            return true;
-        }
-        for (int i = 0; i < this.table.length; i++) {
-            if (this.fillBy(Figure3T::hasMarkO, 0, i, 1, 0) ||
-                    this.fillBy(Figure3T::hasMarkO, i, 0, 0, 1)
-            ) {
-                return true;
-            }
-        }
-        return false;
+        return isWin(Figure3T::hasMarkO);
     }
 
     public boolean hasGap() {
-        return Arrays.stream(this.table)
-                .flatMap(Arrays::stream)
-                .anyMatch(e -> !e.hasMarkX() && !e.hasMarkO());
+        return Arrays.stream(this.table).flatMap(Arrays::stream).anyMatch(e -> !e.hasMarkX() && !e.hasMarkO());
     }
 //        for (int i = 0; i < table.length; i++) {
 //            for (int j = 0; j < this.table.length; j++) {
